@@ -44,6 +44,55 @@ themeToggle?.addEventListener('click', () => {
   updateTheme(currentTheme);
 });
 
+const contactForm = document.getElementById('contact-form');
+const formStatus = document.querySelector('.form-status');
+
+if (contactForm && formStatus) {
+  contactForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    const formData = new FormData(contactForm);
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    formStatus.hidden = false;
+    formStatus.classList.remove('error');
+    formStatus.textContent = 'Sending your message...';
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/olivierniyitanga13@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          subject: formData.get('subject'),
+          message: formData.get('message')
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error('Message could not be sent');
+      }
+
+      formStatus.textContent = 'Your message has been sent successfully!';
+      contactForm.reset();
+    } catch (error) {
+      formStatus.classList.add('error');
+      formStatus.textContent = 'Something went wrong while sending the message. Please try again.';
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send message';
+    }
+  });
+}
+
 const typingText = document.querySelector('.typing-text');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 

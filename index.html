@@ -502,8 +502,9 @@
           </div>
 
           <div class="contact-card glass-card form-card">
-            <form action="https://formspree.io/f/myzypzle" method="POST">
+            <form id="contact-form" action="https://formsubmit.co/681eb08429cad1d5ac8b8ce71ecd60ac" method="POST">
               <input type="hidden" name="_subject" value="New portfolio message for Olivier Niyitanga" />
+              <input type="hidden" name="_captcha" value="false" />
               <div class="field-row">
                 <div class="field">
                   <label for="name">Name</label>
@@ -511,7 +512,7 @@
                 </div>
                 <div class="field">
                   <label for="email">Email</label>
-                  <input id="email" name="_replyto" type="email" placeholder="Your email" required />
+                  <input id="email" name="email" type="email" placeholder="Your email" required />
                 </div>
               </div>
 
@@ -526,6 +527,7 @@
               </div>
 
               <button type="submit" class="button primary form-button">Send message</button>
+              <div class="form-status" role="status" aria-live="polite" hidden></div>
             </form>
           </div>
         </div>
